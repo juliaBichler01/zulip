@@ -222,6 +222,11 @@ html {
             margin-right: 5px;
         }
     }
+
+    .email-visability-info, .change-email-visability {
+        font-size: small;
+        line-height: 1.4;
+    }
 }
 
 .find-account-page-container h3,

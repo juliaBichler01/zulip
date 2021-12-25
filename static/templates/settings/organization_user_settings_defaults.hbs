@@ -21,6 +21,11 @@
           label=settings_label.realm_presence_enabled
           help_link="/help/status-and-availability"
           prefix="realm_"}}
+        <label for="email-visability">Who can access the users email address?</label>
+            {{> ../help_link_widget link="/help/restrict-visibility-of-email-addresses" }}
+        <select name="realm_email_address_visibility" class="setting-widget prop-element" id="email-visability" data-setting-widget-type="number">
+            {{> dropdown_options_widget option_values=email_address_visibility_values}}
+        </select>
     </div>
 
     <div class="form-horizontal other_settings org-subsection-parent">

@@ -66,6 +66,12 @@ page can be easily identified in it's respective JavaScript file -->
                                 </div>
 
                                 <button class="full-width" type="submit">{{ _('Sign up') }}</button>
+                                <div class="email-visability-info">
+                                    When you sign up, your email address will be visible to [roles] in this organization.
+                                </div>
+                                <div class="change-email-visability">
+                                    Change
+                                </div>
                             </form>
 
                             {% if page_params.external_authentication_methods|length > 0 %}

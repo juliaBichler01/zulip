@@ -325,6 +325,11 @@ td .button {
         font-size: 0.9em;
     }
 
+    #email-visability {
+        margin-top: 2px;
+        width: 300px;
+    }
+
     #admin_page_users_loading_indicator,
     #attachments_loading_indicator,
     #admin_page_deactivated_users_loading_indicator,
