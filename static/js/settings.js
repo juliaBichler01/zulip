@@ -99,6 +99,7 @@ export function build_page() {
         user_role_text: people.get_user_type(page_params.user_id),
         default_language_name: settings_display.user_default_language_name,
         settings_object: user_settings,
+        email_address_visibility_values: settings_config.email_address_visibility_values
     });
 
     $(".settings-box").html(rendered_settings_tab);

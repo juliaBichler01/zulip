@@ -684,6 +684,11 @@ export function set_up() {
         });
     });
 
+    $("#email-visibility").on("change", () => {
+        $("#email-visibility").hide();
+        user_profile.email_a
+    })
+
     $("#show_my_user_profile_modal").on("click", () => {
         overlays.close_overlay("settings");
         const user = people.get_by_user_id(people.my_current_user_id());
