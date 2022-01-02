@@ -686,7 +686,7 @@ export function set_up() {
 
     $("#email-visibility").on("change", () => {
         $("#email-visibility").hide();
-        user_profile.email_a
+        // user_profile.email_a
     })
 
     $("#show_my_user_profile_modal").on("click", () => {
