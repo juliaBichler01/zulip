@@ -104,7 +104,7 @@ function show_search_results() {
     search_is_active = true;
 }
 
-function show_emoji_catalog() {
+export function show_emoji_catalog() {
     $(".emoji-popover-emoji-map").show();
     $(".emoji-popover-category-tabs").show();
     $(".emoji-search-results-container").hide();
@@ -158,7 +158,7 @@ export function rebuild_catalog() {
     }));
 }
 
-const generate_emoji_picker_content = function (id) {
+export const generate_emoji_picker_content = function (id) {
     let emojis_used = [];
 
     if (id !== undefined) {
@@ -175,7 +175,7 @@ const generate_emoji_picker_content = function (id) {
     });
 };
 
-function refill_section_head_offsets(popover) {
+export function refill_section_head_offsets(popover) {
     section_head_offsets = [];
     popover.find(".emoji-popover-subheading").each(function () {
         section_head_offsets.push({
@@ -316,7 +316,7 @@ function round_off_to_previous_multiple(number_to_round, multiple) {
     return number_to_round - (number_to_round % multiple);
 }
 
-function reset_emoji_showcase() {
+export function reset_emoji_showcase() {
     $(".emoji-showcase-container").html("");
 }
 
@@ -577,7 +577,7 @@ export function emoji_select_tab(elt) {
     }
 }
 
-function register_popover_events(popover) {
+export function register_popover_events(popover) {
     const $emoji_map = popover.find(".emoji-popover-emoji-map");
 
     ui.get_scroll_element($emoji_map).on("scroll", () => {

@@ -37,6 +37,7 @@ import * as upload from "./upload";
 import {user_settings} from "./user_settings";
 import * as util from "./util";
 import * as zcommand from "./zcommand";
+import {toggle_mention_popover} from './mention_picker'
 
 // Docs: https://zulip.readthedocs.io/en/latest/subsystems/sending-messages.html
 
@@ -647,6 +648,14 @@ export function initialize() {
                 },
             );
         }
+    });
+
+    $("body").on("click", ".mention_map", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const compose_click_target = compose_ui.get_compose_click_target(e);
+        toggle_mention_popover(compose_click_target);
     });
 
     $("#compose").on("click", ".markdown_preview", (e) => {

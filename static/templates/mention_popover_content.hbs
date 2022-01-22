@@ -1,0 +1,15 @@
+<div class="emoji-popover">
+    <div class="emoji-popover-top">
+        <input class="emoji-popover-filter" type="text" autofocus placeholder="{{t 'Search' }}" />
+        <i class="fa fa-search" aria-hidden="true"></i>
+    </div>
+    <div class="emoji-popover-emoji-map" data-simplebar data-simplebar-auto-hide="false" data-message-id="{{message_id}}">
+        {{#each persons }}
+            {{full_name}}
+        {{/each}}
+    </div>
+    <div class="emoji-search-results-container" data-simplebar data-simplebar-auto-hide="false" data-message-id="{{message_id}}">
+        <div class="emoji-popover-results-heading">{{t "Search results" }}</div>
+        <div class="emoji-search-results"></div>
+    </div>
+</div>
