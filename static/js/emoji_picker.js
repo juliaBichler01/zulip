@@ -217,7 +217,7 @@ function get_rendered_emoji(section, index) {
     return undefined;
 }
 
-function filter_emojis() {
+export function filter_emojis() {
     const elt = $(".emoji-popover-filter").expectOne();
     const query = elt.val().trim().toLowerCase();
     const message_id = $(".emoji-search-results-container").data("message-id");
@@ -285,7 +285,7 @@ function is_status_emoji(emoji) {
     return $(emoji).hasClass("status_emoji");
 }
 
-function process_enter_while_filtering(e) {
+export function process_enter_while_filtering(e) {
     if (e.key === "Enter") {
         e.preventDefault();
         const first_emoji = get_rendered_emoji(0, 0);
@@ -518,7 +518,7 @@ export function navigate(event_name, e) {
     }
 }
 
-function process_keypress(e) {
+export function process_keypress(e) {
     const is_filter_focused = $(".emoji-popover-filter").is(":focus");
     const pressed_key = e.which;
     if (
