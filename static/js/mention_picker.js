@@ -21,9 +21,11 @@ let edit_message_id = null;
 
 const generate_mention_picker_content = function (id) {
   let persons = get_person_suggestions('', {});
-  persons = persons.map((person) => {return {person: render_person(person)}});
+  const first_person = persons[0].full_name;
+  persons = persons.map((person) => {return {person: render_person(person), name: person.full_name}});
 
   return render_mention_popover_content({
+      first: first_person,
       message_id: id,
       persons: persons,
   });
@@ -34,13 +36,17 @@ function filter_mentions() {
     const query = elt.val().trim().toLowerCase();
 
     let persons = get_person_suggestions(query, {});
-    persons = persons.map((person) => {return {person: render_person(person)}});
+    const first_person = persons[0].full_name;
+    persons = persons.map((person) => {return {person: render_person(person), name: person.full_name}});
 
     const user_list = render_mention_popover_user_list({
+        first: first_person,
         persons: persons
     })
 
     $(".mention-popover-user-list").html(user_list);
+    // $(".first_element").expectOne();
+    registrer_click_handlers();
 }
 
 function process_keypress(e) {
@@ -78,9 +84,13 @@ function process_keypress(e) {
 function process_enter_while_filtering(e) {
     if (e.key === "Enter") {
         e.preventDefault();
-        const first_mention = $(".mention-popover-user-list").children().first();
-        first_mention.trigger("click");
+        const first_mention = $(".first_mention");
+        $(first_mention).trigger("click");
     }
+}
+
+function reactions_popped() {
+    return current_message_mention_popover_elem !== undefined;
 }
 
 function hide_mention_popover() {
@@ -92,38 +102,20 @@ function hide_mention_popover() {
         $(".app, .header, .modal__overlay, #set_user_status_modal").css("pointer-events", "all");
     }
     if (reactions_popped()) {
-        current_message_emoji_popover_elem.popover("destroy");
-        current_message_emoji_popover_elem.removeClass("reaction_button_visible");
-        current_message_emoji_popover_elem = undefined;
+        current_message_mention_popover_elem.popover("destroy");
+        current_message_mention_popover_elem.removeClass("reaction_button_visible");
+        current_message_mention_popover_elem = undefined;
     }
 }
 
-function register_popover_events(popover) {
-    const $user_list = popover.find(".mention-popover-user-list");
+function register_popover_events() {
+    const $user_list = $(".mention-popover-user-list");
 
     // ui.get_scroll_element($user_list).on("scroll", () => {
     //     emoji_select_tab(ui.get_scroll_element($user_list));
     // });
 
-    $(".user_list_element").on("click", function (e) {
-        const emoji_name = $(this).attr("name");
-        const emoji_text = ":" + emoji_name + ":";
-        // The following check will return false if emoji was not selected in
-        // message edit form.
-        if (edit_message_id !== null) {
-            const edit_message_textarea = $(
-                `#edit_form_${CSS.escape(edit_message_id)} .message_edit_content`,
-            );
-            // Assign null to edit_message_id so that the selection of emoji in new
-            // message composition form works correctly.
-            edit_message_id = null;
-            compose_ui.insert_syntax_and_focus(emoji_text, edit_message_textarea);
-        } else {
-            compose_ui.insert_syntax_and_focus(emoji_text);
-        }
-        e.stopPropagation();
-        hide_mention_popover();
-    });
+    registrer_click_handlers();
 
     $(".mention-popover-filter").on("input", filter_mentions);
     $(".mention-popover-filter").on("keydown", process_enter_while_filtering);
@@ -136,6 +128,29 @@ function register_popover_events(popover) {
         if (e.which === 8) {
             process_keypress(e);
         }
+    });
+}
+
+function registrer_click_handlers() {
+    $(".user_list_element").on("click", function (e) {
+        $(this).hide();
+        const mention_name = $(this).attr("name");
+        const mention_text = "@**" + mention_name + "**";
+        // The following check will return false if emoji was not selected in
+        // message edit form.
+        if (edit_message_id !== null) {
+            const edit_message_textarea = $(
+                `#edit_form_${CSS.escape(edit_message_id)} .message_edit_content`
+            );
+            // Assign null to edit_message_id so that the selection of emoji in new
+            // message composition form works correctly.
+            edit_message_id = null;
+            compose_ui.insert_syntax_and_focus(mention_text, edit_message_textarea);
+        } else {
+            compose_ui.insert_syntax_and_focus(mention_text);
+        }
+        // e.stopPropagation();
+        hide_mention_popover();
     });
 }
 
@@ -172,8 +187,6 @@ function build_mention_popover(elt, id) {
   });
   elt.popover("show");
 
-  initialize_compose_typeahead(".emoji-popover-filter");
-
   const popover = elt.data("popover").$tip;
   popover.find(".mention-popover-filter").trigger("focus");
   current_message_mention_popover_elem = elt;
@@ -183,7 +196,7 @@ function build_mention_popover(elt, id) {
       index: 0,
   };
 
-  register_popover_events(popover);
+  register_popover_events();
 }
 
 export function toggle_mention_popover(element, id) {

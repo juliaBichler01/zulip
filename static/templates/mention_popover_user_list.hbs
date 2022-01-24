@@ -1,5 +1,5 @@
 {{#each persons }}
-    <div class="user_list_element" name="Test">
+    <div class="user_list_element {{#if (eq name ../first)}}first_mention{{/if}}" name="{{name}}">
         {{{person}}}
     </div>
 {{/each}}
