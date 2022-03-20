@@ -80,7 +80,33 @@ const markdown_help_rows = [
     {
         markdown: "/me is busy working",
         output_html: '<p><span class="sender_name-in-status">Iago</span> is busy working</p>',
-        usage_html: "(send a status message as user Iago)",
+    },
+    {
+        markdown: `/poll What did you drink this morning?
+Milk
+Tea
+Coffee`,
+        output_html: `<h4 class="poll-question-header">What did you drink this morning?</h4>
+<ul class="poll-widget">
+    <li>
+        <button class="poll-vote">
+            0
+        </button>
+        <span class="poll-option">Milk</span>
+    </li>
+    <li>
+        <button class="poll-vote">
+            0
+        </button>
+        <span class="poll-option">Tea</span>
+    </li>
+    <li>
+        <button class="poll-vote">
+            0
+        </button>
+        <span class="poll-option">Coffee</span>
+    </li>
+</ul>`
     },
     {
         markdown: "Some inline `code`",
